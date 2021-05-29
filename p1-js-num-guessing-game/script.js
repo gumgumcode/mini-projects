@@ -17,6 +17,11 @@ let check_button = document.querySelector('.check');
 // Event Listeners
 document.querySelector('.check').addEventListener('click', checkGuess);
 document.querySelector('.reset').addEventListener('click', reset);
+document.addEventListener("keyup", function(event) {
+    if (event.key === 'Enter') {
+        checkGuess();
+    }
+});
 
 function checkGuess() {
 
