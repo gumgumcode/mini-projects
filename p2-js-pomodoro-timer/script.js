@@ -25,13 +25,13 @@ let audioInterval = null;
 
 // Flags
 
-let isPaused = 0;
-let freshStart = 1;
+let isPaused = null;
+let freshStart = null;
 
 // Default Time Config
 
-let mins = 25;
-let totalCountdownSeconds = mins * 60;
+let mins = null;
+let totalCountdownSeconds = null;
 
 // Audio
 let audio1 = new Audio('audio/beep.mp3');
@@ -59,7 +59,8 @@ btn_reset.addEventListener('click', appInit);
 function appInit() {
     mins = 25;
     totalCountdownSeconds = mins * 60;
-    freshStart=1;
+    isPaused = 0;
+    freshStart = 1;
     updateTimeOutput();
     clearInterval(secondsInterval);
     secondsInterval = null;
