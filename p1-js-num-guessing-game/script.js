@@ -36,11 +36,11 @@ function checkGuess() {
         // Guess matches: WIN
     } else if (guess === secret_number) {
         setMessage('✅ Correct Guess!');
+        game_over = 1;
         check_button.textContent = 'Play again!';
+        guess_box.disabled = true;
         body.style.backgroundColor = '#60b347';
         number_box.textContent = guess;
-        guess_box.disabled = true;
-        game_over = 1;
         highscore = score > highscore ? score : highscore;
         highscore_output.textContent = highscore;
 
@@ -69,17 +69,20 @@ function reduceScore() {
     if (score < 1) {
         setMessage('😫 Game over!');
         game_over = 1;
+        check_button.textContent = 'Play again!';
+        guess_box.disabled = true;
+        body.style.backgroundColor = '#B22222';
     }
 }
 
 function gameSetup() {
     // Options
     secret_number = Math.trunc(Math.random()*20) + 1;
-    console.log(secret_number);
     score = 20;
     game_over = 0;
 
     // Reset Output Text
+    body.style.backgroundColor = '#222';
     check_button.textContent = 'Check!';
     number_box.textContent = '?';
     score_output.textContent = score;
