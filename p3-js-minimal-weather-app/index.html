@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <title>Minimal Weather App</title>
+</head>
+<body>
+    <header class="site-header">
+        <h1>Minimal Weather App</h1>
+    </header>
+    <main>
+        <section class="controls-section">
+            <form>
+                <input class="input-box" type="text">
+                <button id="submit-btn" type="submit">SUBMIT</button>
+                <button id="demo-btn" type="button">DEMO</button>
+                <button id="reset-btn" type="button">RESET</button>
+            </form>
+            <p id="error-message">Enter a city name 🌤</p>
+        </section>
+        <section class="output-section">
+            <ul class="cities"></ul>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
