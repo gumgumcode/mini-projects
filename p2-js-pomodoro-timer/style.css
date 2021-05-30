@@ -75,17 +75,17 @@ body {
   border: 2px solid white;
 }
 
-.controls #btn_start {
+.controls #btn-start {
   background: var(--goog_green);
   color: white;
 }
 
-.controls #btn_stop {
+.controls #btn-stop {
   background: var(--goog_red);
   color: white;
 }
 
-.controls #btn_reset {
+.controls #btn-reset {
   background: var(--goog_blue);
   color: white;
 }
