@@ -12,9 +12,9 @@
 
 // Selectors
 
-let btn_start = document.querySelector('.btn_start');
-let btn_stop = document.querySelector('.btn_stop');
-let btn_reset = document.querySelector('.btn_reset');
+let btn_start = document.querySelector('#btn_start');
+let btn_stop = document.querySelector('#btn_stop');
+let btn_reset = document.querySelector('#btn_reset');
 let timer_mins = document.querySelector('.timer_mins');
 let timer_secs = document.querySelector('.timer_secs');
 
