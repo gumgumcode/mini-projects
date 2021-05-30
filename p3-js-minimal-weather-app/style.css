@@ -3,11 +3,13 @@
 :root {
   --bg_main: #0F9D58;
   --text_light: #fff;
+  --text_med: #53627c;
+  --text_dark: #1e2432;
   --goog_yellow: #F4B400;
   --goog_red: #DB4437;
   --goog_blue: #4285F4;
 }
-  
+
 * {
   margin: 0;
   padding: 0;
