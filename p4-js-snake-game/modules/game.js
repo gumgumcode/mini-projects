@@ -22,7 +22,6 @@ function main(currentTime) {
     if (secondsSinceLastRender < 1 / SNAKE_SPEED) return
 
     // otherwise render stuff
-    console.log("render")
     update()
     draw()
 
