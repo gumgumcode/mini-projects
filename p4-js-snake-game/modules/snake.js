@@ -10,18 +10,22 @@ export function update() {
     // add new segments if any
     addSegments()
 
+    // starting with last segment, 
+    // move every single segment to the previous segment's position,
+    // except the head (0th) segment. 
     for (let i = snakeBody.length - 2; i >= 0; i--) {
         snakeBody[i + 1] = { ...snakeBody[i] }
         console.log(snakeBody)
     }
     
+    // find new position for head (0th) segment 
     const inputDirection = getInputDirection()
-
     snakeBody[0].x += inputDirection.x
     snakeBody[0].y += inputDirection.y
 }
 
 export function draw(gameBoard) {
+    // draw every single segment of the snake's body
     snakeBody.forEach(segment => {
         const snakeElement = document.createElement('div')
         snakeElement.style.gridRowStart = segment.y
@@ -36,6 +40,7 @@ export function expandSnake(amount) {
 }
 
 export function onSnake(position, { ignoreHead = false } = {}) {
+    // some() returns true if any of the segments pass the test
     return snakeBody.some((segment, index) => {
         if (ignoreHead && index === 0) return false
         return equalPositions(segment, position)
@@ -55,8 +60,11 @@ function equalPositions(pos1, pos2) {
 }
 
 function addSegments() {
+    // keep adding a segment to the tail of snake's body
     for(let i=0; i < newSegments; i++) {
         snakeBody.push({ ...snakeBody[snakeBody.length - 1]})
     }
+
+    // reset new segments to zero after adding them to the snake's body
     newSegments = 0
 }
