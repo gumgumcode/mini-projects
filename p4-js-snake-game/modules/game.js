@@ -37,6 +37,7 @@ function update() {
 }
 
 function draw() {
+    if (gameOver) return
     gameBoard.innerHTML = ''
     drawSnake(gameBoard)
     drawFood(gameBoard)
