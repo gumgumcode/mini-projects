@@ -6,21 +6,23 @@
 
 let ip_input = document.getElementById('input-field')
 let ip_list_output = document.getElementById('ip-list')
+let reset_btn = document.getElementById('reset-btn')
 let submit_btn = document.getElementById('submit-btn')
 submit_btn.addEventListener('click', main)
+reset_btn.addEventListener('click', reset_output)
 
 /**
- * DEFAULTS
+ * CONSTANTS
  */
 const MAX_OCTET = 255
-let ip = [
-    [0, 0],
-    [0, 0],
-    [0, 0],
-    [0, 0]
-]
-let cidr = 32
-let count = Math.pow(2, 32 - cidr)
+
+
+/**
+ * VARIABLES
+ */
+let ip = []
+let cidr = 0
+let count = 0
 let ip_list = []
 
 function increment_octet_count(i) {
@@ -118,8 +120,24 @@ function get_ip_and_cidr_from_input(ip_string) {
 }
 
 function reset_output() {
+    ip = [
+        [0, 0],
+        [0, 0],
+        [0, 0],
+        [0, 0]
+    ]
+    cidr = 32
+    count = 0
     ip_list = []
     ip_list_output.innerHTML = ''
+}
+
+function generate_output() {
+    let output = ''
+    ip_list.forEach(ip => {
+        output += ip + '<br>'
+    })
+    ip_list_output.innerHTML += output
 }
 
 function main() {
@@ -128,26 +146,23 @@ function main() {
     reset_output()
 
     // Get Input
-    let [ip_array, cidr] = get_ip_and_cidr_from_input('192.168.0.1/23')
+    let [ip_array, cidr] = get_ip_and_cidr_from_input(ip_input.value.toString())
 
     if (!ip_array || !cidr) {
         return
     }
 
+    // Populate ip array and count variable
     ip_array.forEach((octet, index) => {
         ip[index][0] = octet
     })
-    count =  Math.pow(2, 32 - cidr)
+    count = Math.pow(2, 32 - cidr)
 
-    // Process Stuff
+    // First IP
     store_ip()
     count--
+
+    // Final Processing
     process_ips()
-
-    console.log(ip_list)
-
-    // Generate Output
-    ip_list.forEach(ip => {
-        ip_list_output.innerHTML += ip + '<br>'
-    })
+    generate_output()
 }
