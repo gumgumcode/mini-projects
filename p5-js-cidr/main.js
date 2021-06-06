@@ -1,29 +1,91 @@
+// SELECTORS
 
+let input_ip = document.getElementById('input-ip')
+let input_cidr = document.getElementById('input-cidr')
 
-/**
- * SELECTORS
- */
+let outputs = document.getElementById('outputs')
+let output_ip_range = document.getElementById('output-ip-range')
+let output_ip_list = document.getElementById('output-ip-list')
 
-let ip_input = document.getElementById('input-field')
-let ip_list_output = document.getElementById('ip-list')
-let reset_btn = document.getElementById('reset-btn')
-let submit_btn = document.getElementById('submit-btn')
-submit_btn.addEventListener('click', main)
-reset_btn.addEventListener('click', reset_output)
+// EVENT LISTENERS
 
-/**
- * CONSTANTS
- */
+document.getElementById('submit-btn').addEventListener('click', main)
+document.getElementById('reset-btn').addEventListener('click', reset_output)
+
+// CONSTANTS
+
 const MAX_OCTET = 255
+const MAX_CIDR = 32
+const MIN_CIDR = 15
 
+// OPTIONS
 
-/**
- * VARIABLES
- */
-let ip = []
-let cidr = 0
-let count = 0
-let ip_list = []
+let ip = null
+let count = null
+let ip_list = null
+
+// GETTERS AND SETTERs
+
+function get_ip_val() {
+    return input_ip.value ? input_ip.value.split('.').map(x => Number(x)) : [192, 168, 0, 1]
+}
+
+function get_cidr_val() {
+    let cidr_val = input_cidr.value ? Number(input_cidr.value) : 28
+
+    if (cidr_val < MIN_CIDR || cidr_val > MAX_CIDR) {
+        throw new Error('Invalid CIDR Range. Try a value between 16 and 32.')
+    } else {
+        return cidr_val
+    }
+}
+
+function set_ip(ip_val) {
+    ip_val.forEach((octet, index) => {
+        ip[index][0] = octet
+    })
+}
+
+function get_ip_count(cidr) {
+    return Math.pow(2, 32 - cidr)
+}
+
+function set_ip_count(cidr) {
+    count = Math.pow(2, 32 - cidr)
+}
+
+function generate_output() {
+    let output = ''
+    ip_list.forEach(ip => {
+        output += ip + '<br>'
+    })
+    output_ip_list.innerHTML += output
+    output_ip_range.innerHTML = 'Number of IPs: ' + get_ip_count(get_cidr_val())
+}
+
+function reset_output() {
+    ip = [
+        [0, 0],
+        [0, 0],
+        [0, 0],
+        [0, 0]
+    ]
+    count = 0
+    ip_list = []
+    output_ip_range.innerHTML = ''
+    output_ip_list.innerHTML = ''
+}
+
+// CONDTION CHECKS
+
+function is_valid_octet(num) {
+    if (num < 256) {
+        return true
+    }
+    return false
+}
+
+// CORE FUNCTIONS
 
 function increment_octet_count(i) {
 
@@ -63,106 +125,30 @@ function process_ips() {
 function store_ip() {
     let ip_string = ip[0][0] + '.' + ip[1][0] + '.' + ip[2][0] + '.' + ip[3][0]
     ip_list.push(ip_string)
-
-    // ip_list_output.innerHTML += ip_string + '<br>'
-    // console.log(ip[0][0] + '.' + ip[1][0] + '.' + ip[2][0] + '.' + ip[3][0])
 }
 
-function valid_octet(num) {
-    if (num < 256) {
-        return true
-    }
-    return false
-}
-
-function get_ip_and_cidr_from_input(ip_string) {
-    let decimal_octets = [] // empty array
-    let cidr = 32 // default to 32
-    let start_index = 0
-
-    for (let i = 0; i < ip_string.length; i++) {
-
-        if (ip_string[i] === '.') {
-            let num = Number(ip_string.slice(start_index, i))
-
-            if (valid_octet(num)) {
-                decimal_octets.push(num)
-            } else {
-                console.error('Invalid IP')
-                break
-            }
-            start_index = i + 1
-
-        } else if (ip_string[i] === '/') {
-            let num = Number(ip_string.slice(start_index, i))
-
-            if (valid_octet(num)) {
-                decimal_octets.push(num)
-            } else {
-                console.error('Invalid IP')
-                break
-            }
-            start_index = i + 1
-
-        } else if (i === ip_string.length - 1) {
-
-            cidr = Number(ip_string.slice(start_index, ip_string.length))
-
-            if (cidr < 16 || cidr > 32) {
-                console.error('CIDR value needs to be between 16 and 32')
-                break
-            }
-
-        }
-    }
-
-    return [decimal_octets, cidr]
-}
-
-function reset_output() {
-    ip = [
-        [0, 0],
-        [0, 0],
-        [0, 0],
-        [0, 0]
-    ]
-    cidr = 32
-    count = 0
-    ip_list = []
-    ip_list_output.innerHTML = ''
-}
-
-function generate_output() {
-    let output = ''
-    ip_list.forEach(ip => {
-        output += ip + '<br>'
-    })
-    ip_list_output.innerHTML += output
-}
+// MAIN
 
 function main() {
+    try {
+        // Clear output
+        reset_output()
 
-    // Clear outputs
-    reset_output()
+        // Set globals using input
+        set_ip(get_ip_val())
+        set_ip_count(get_cidr_val())
 
-    // Get Input
-    let [ip_array, cidr] = get_ip_and_cidr_from_input(ip_input.value.toString())
+        // Store first IP
+        store_ip()
+        count--
 
-    if (!ip_array || !cidr) {
-        return
+        // Final processing
+        process_ips()
+        generate_output()
     }
-
-    // Populate ip array and count variable
-    ip_array.forEach((octet, index) => {
-        ip[index][0] = octet
-    })
-    count = Math.pow(2, 32 - cidr)
-
-    // First IP
-    store_ip()
-    count--
-
-    // Final Processing
-    process_ips()
-    generate_output()
+    catch (error) {
+        console.error(error)
+    }
 }
+
+main()
