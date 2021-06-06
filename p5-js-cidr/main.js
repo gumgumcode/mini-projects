@@ -6,6 +6,7 @@ let input_cidr = document.getElementById('input-cidr')
 let outputs = document.getElementById('outputs')
 let output_ip_range = document.getElementById('output-ip-range')
 let output_ip_list = document.getElementById('output-ip-list')
+let output_error = document.getElementById('output-error')
 
 // EVENT LISTENERS
 
@@ -27,7 +28,15 @@ let ip_list = null
 // GETTERS AND SETTERs
 
 function get_ip_val() {
-    return input_ip.value ? input_ip.value.split('.').map(x => Number(x)) : [192, 168, 0, 1]
+    let ip_val = input_ip.value ? input_ip.value.split('.').map(x => Number(x)) : [192, 168, 0, 1]
+
+    ip_val.forEach(octet => {
+        if (!is_valid_octet(octet)) {
+            throw new Error('Invalid IP')
+        }
+    })
+
+    return ip_val
 }
 
 function get_cidr_val() {
@@ -76,10 +85,10 @@ function reset_output() {
     output_ip_list.innerHTML = ''
 }
 
-// CONDTION CHECKS
+// CONDITION CHECKS
 
 function is_valid_octet(num) {
-    if (num < 256) {
+    if (num >=0 && num < 256) {
         return true
     }
     return false
@@ -147,6 +156,7 @@ function main() {
         generate_output()
     }
     catch (error) {
+        output_error.innerHTML = 'Check console for errors!'
         console.error(error)
     }
 }
