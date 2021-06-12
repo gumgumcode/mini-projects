@@ -12,22 +12,18 @@ const squarePiece = [
     { x: 2, y: 1 },
     { x: 2, y: 2 }
 ]
-
 const linePiece = [
     { x: 1, y: 1 },
     { x: 1, y: 2 },
     { x: 1, y: 3 },
     { x: 1, y: 4 }
 ]
-
 const pieces = [squarePiece, linePiece]
 
-let currentPiece = [
-    { x: 1, y: 1 },
-    { x: 1, y: 2 },
-    { x: 2, y: 1 },
-    { x: 2, y: 2 }
-]
+// SETUP
+
+let currentPiece = []
+setRandomCurrentPiece()
 
 // UPDATE AND DRAW
 
@@ -84,8 +80,7 @@ export function draw(gameBoard) {
 
 function setRandomCurrentPiece() {
     let randomVal = Math.floor(Math.random() * 2) // between 0 and 1
-    // let piece = pieces[randomVal]
-    let piece = pieces[0]
+    let piece = pieces[randomVal]
     currentPiece = []
 
     piece.forEach((segment, index) => {

@@ -17,8 +17,8 @@ body {
 
 #game-board {
     background: #ccc;
-    width: 25em;
-    height: 50em;
+    width: 50em;
+    height: 100em;
     display: grid;
     /* grid-template-rows: repeat(41, 1fr);
     grid-template-columns: repeat(21, 1fr); */
