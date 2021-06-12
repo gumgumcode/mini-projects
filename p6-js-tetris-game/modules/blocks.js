@@ -1,19 +1,4 @@
-// const blocks = []
-const blocks = [
-    { x: 1, y: 24 },
-    { x: 2, y: 24 },
-    { x: 3, y: 24 },
-    { x: 4, y: 24 },
-    { x: 5, y: 24 },
-    { x: 6, y: 24 },
-    { x: 7, y: 24 },
-    { x: 8, y: 24 },
-    { x: 9, y: 24 },
-    { x: 10, y: 24 },
-    { x: 11, y: 24 },
-    { x: 12, y: 24 },
-]
-// const topblocks = []
+const blocks = []
 
 export function update() {
     checkRows()
@@ -62,7 +47,7 @@ function checkRows() {
         if (count >= 12) {
             // empty that row
             emptyTheRow(row)
-            stepDownBlocks()
+            stepDownBlocks(row)
         }
     }
 }
@@ -70,13 +55,17 @@ function checkRows() {
 function emptyTheRow(y) {
     blocks.forEach((b, index, object) => {
         if (b.y === y) {
-            object.splice(index, y)
+            // object.splice(index, 1)
+            b.y = 30
         }
     })
 }
 
-function stepDownBlocks() {
+function stepDownBlocks(row) {
+    // if block is above deleted row, move it down
     blocks.forEach(b => {
-        b.y += 1
+        if (b.y < row) {
+            b.y += 1
+        }
     })
 }
