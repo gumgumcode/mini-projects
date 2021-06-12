@@ -8,8 +8,8 @@ body {
 }
 
 .game-section {
-    height: 50em;
-    width: 50em;
+    /* height: 50em;
+    width: 50em; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,8 +17,8 @@ body {
 
 #game-board {
     background: #ccc;
-    width: 50em;
-    height: 100em;
+    width: 25em;
+    height: 50em;
     display: grid;
     /* grid-template-rows: repeat(41, 1fr);
     grid-template-columns: repeat(21, 1fr); */
@@ -26,5 +26,5 @@ body {
 
 .piece {
     background-color: lightseagreen;
-    border: 1px solid #000;
+    /* border: 1px solid #000; */
 }

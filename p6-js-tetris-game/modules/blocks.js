@@ -1,6 +1,5 @@
 // const blocks = []
 const blocks = [
-    { x: 0, y: 24 },
     { x: 1, y: 24 },
     { x: 2, y: 24 },
     { x: 3, y: 24 },
@@ -12,6 +11,7 @@ const blocks = [
     { x: 9, y: 24 },
     { x: 10, y: 24 },
     { x: 11, y: 24 },
+    { x: 12, y: 24 },
 ]
 // const topblocks = []
 
@@ -47,18 +47,9 @@ export function onBlock(piece) {
     })
 }
 
-function emptyTheRow(y) {
-    blocks.forEach(b => {
-        if (b.y == y) {
-            b.x = 25
-            b.y = 25
-        }
-    })
-}
-
 function checkRows() {
     // go through each row
-    for(let row = 24; row>=0; row--) {
+    for(let row = 24; row>=1; row--) {
 
         let count = 0
         blocks.forEach(b => {
@@ -71,6 +62,21 @@ function checkRows() {
         if (count >= 12) {
             // empty that row
             emptyTheRow(row)
+            stepDownBlocks()
         }
     }
+}
+
+function emptyTheRow(y) {
+    blocks.forEach((b, index, object) => {
+        if (b.y === y) {
+            object.splice(index, y)
+        }
+    })
+}
+
+function stepDownBlocks() {
+    blocks.forEach(b => {
+        b.y += 1
+    })
 }
