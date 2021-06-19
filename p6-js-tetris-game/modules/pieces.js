@@ -3,6 +3,7 @@
 import { GRID_HEIGHT, GRID_WIDTH, outOfGrid } from "./grid.js"
 import { onBlock, setBlocks } from "./blocks.js"
 import { getInputDirection, resetInputDirection } from "./input.js"
+import { setGameOver } from "./main.js"
 
 // CONSTANTS
 
@@ -18,7 +19,13 @@ const linePiece = [
     { x: 1, y: 3 },
     { x: 1, y: 4 }
 ]
-const pieces = [squarePiece, linePiece]
+const anglePiece = [
+    { x: 1, y: 1 },
+    { x: 1, y: 2 },
+    { x: 1, y: 3 },
+    { x: 2, y: 3 },
+]
+const pieces = [squarePiece, linePiece, anglePiece]
 
 // SETUP
 
@@ -79,8 +86,13 @@ export function draw(gameBoard) {
 // FUNCTIONS
 
 function setRandomCurrentPiece() {
-    let randomVal = Math.floor(Math.random() * 2) // between 0 and 1
+    let randomVal = Math.floor(Math.random() * pieces.length) // between 0 and 1
     let piece = pieces[randomVal]
+
+    if (onBlock(piece)) {
+        setGameOver(1)
+    }
+
     currentPiece = []
 
     piece.forEach((segment, index) => {
